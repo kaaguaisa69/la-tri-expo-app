@@ -34,27 +34,27 @@ export default function DetailModal({ visible, onClose }) {
   const [activeTab, setActiveTab] = useState('plantilla');
 
   /**
-   * Data Mock Estática (Array de jugadores).
-   * @type {Array<Object>}
-   */
+ * Data Real Actualizada (Array de jugadores).
+ * @type {Array<Object>}
+ */
   const squad = [
     { name: 'Moisés Caicedo', position: 'Centrocampista', club: 'Chelsea FC (ING)', number: '23' },
-    { name: 'Piero Hincapié', position: 'Defensa Central', club: 'Bayer Leverkusen (ALE)', number: '3' },
-    { name: 'Enner Valencia', position: 'Delantero / Capitán', club: 'Internacional (BRA)', number: '13' },
+    { name: 'Piero Hincapié', position: 'Defensa Central', club: 'Arsenal FC (ING)', number: '3' },
+    { name: 'Enner Valencia', position: 'Delantero / Capitán', club: 'CF Pachuca (MEX)', number: '13' },
     { name: 'Willian Pacho', position: 'Defensa Central', club: 'Paris Saint-Germain (FRA)', number: '6' },
-    { name: 'Kendry Páez', position: 'Mediapunta', club: 'Ind. del Valle (ECU)', number: '10' },
-    { name: 'Pervis Estupiñán', position: 'Lateral Izquierdo', club: 'Brighton (ING)', number: '7' },
+    { name: 'Kendry Páez', position: 'Mediapunta', club: 'CA River Plate (ARG)', number: '10' },
+    { name: 'Pervis Estupiñán', position: 'Lateral Izquierdo', club: 'Brighton & Hove Albion (ING)', number: '7' },
   ];
 
   /**
-   * Data Mock Estática (Array de futuros partidos y calendarios).
+   * Data Histórica (Resultados de partidos ya disputados).
    * @type {Array<Object>}
    */
   const matches = [
-    { opponent: 'Bolivia', location: 'Estadio Monumental (Guayaquil)', date: 'Eliminatorias 2026', type: 'Local' },
-    { opponent: 'Colombia', location: 'Estadio Metropolitano (Barranquilla)', date: 'Eliminatorias 2026', type: 'Visitante' },
-    { opponent: 'Venezuela', location: 'Estadio Rodrigo Paz Delgado (Quito)', date: 'Eliminatorias 2026', type: 'Local' },
-    { opponent: 'Chile', location: 'Estadio Nacional (Santiago)', date: 'Eliminatorias 2026', type: 'Visitante' },
+    { opponent: 'Bolivia', location: 'Estadio Monumental (Guayaquil)', date: '14 de Nov, 2024', type: 'Local', result: '4-0' },
+    { opponent: 'Colombia', location: 'Estadio Metropolitano (Barranquilla)', date: '19 de Nov, 2024', type: 'Visitante', result: '1-0' },
+    { opponent: 'Venezuela', location: 'Estadio R. Paz Delgado (Quito)', date: '21 de Mar, 2025', type: 'Local', result: '2-1' },
+    { opponent: 'Chile', location: 'Estadio Nacional (Santiago)', date: '25 de Mar, 2025', type: 'Visitante', result: '0-0' },
   ];
 
   /**
@@ -152,7 +152,7 @@ export default function DetailModal({ visible, onClose }) {
     >
       {/* Máscara de oscurecimiento de fondo */}
       <View style={styles.overlay}>
-        
+
         {/* Envoltorio simulando un panel inferior (Bottom Sheet) */}
         <View style={styles.sheetContainer}>
           {/* Header Drag Bar (Decorativo visual) */}

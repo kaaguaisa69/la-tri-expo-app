@@ -269,7 +269,7 @@ export default function AnimatedSplash({ onComplete }) {
               ]}
             >
               <Image
-                source={require('../../assets/copa.png')}
+                source={require('../../assets/escudo_ecuador.png')}
                 style={styles.cupImage}
                 resizeMode="contain"
               />

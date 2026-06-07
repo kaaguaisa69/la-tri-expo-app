@@ -99,7 +99,7 @@ export default function HomeScreen() {
         <View style={styles.badgeFrame}>
           <View style={styles.badgeRing}>
             <Image
-              source={require('../../assets/copa.png')}
+              source={require('../../assets/escudo_ecuador.png')}
               style={styles.badgeImage}
               resizeMode="contain"
             />
