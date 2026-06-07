@@ -1,3 +1,6 @@
+/**
+ * Importaciones del ecosistema de React Native
+ */
 import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
@@ -10,23 +13,54 @@ import {
   Animated,
   StatusBar,
 } from 'react-native';
+
+/**
+ * Importación de librería de Iconos nativos
+ */
 import { Ionicons } from '@expo/vector-icons';
+
+/**
+ * Importaciones de diseño y sub-componentes customizados
+ */
 import { COLORS, BORDER_RADIUS, SPACING, SHADOWS } from '../styles/theme';
 import InfoCard from './InfoCard';
 import DetailModal from './DetailModal';
 
+/**
+ * Componente principal del Dashboard (Home Screen).
+ * Muestra el contenido principal de La Tri, integrando banners tipo hero,
+ * un resumen de datos básicos (InfoCards) y el enlazador a la ventana modal detallada.
+ *
+ * @returns {JSX.Element} Vista renderizada de la pantalla de inicio
+ */
 export default function HomeScreen() {
+  /**
+   * Visibilidad de la ventana lateral inferio (Bottom Sheet Modal).
+   * @type {[boolean, function]}
+   */
   const [modalVisible, setModalVisible] = useState(false);
+  
+  /**
+   * Valor para animar la opacidad del cuerpo y listas de tarjetas al montarse
+   * @type {Animated.Value}
+   */
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  
+  /**
+   * Valor para animar la posición vertical del cuerpo y listas al montarse (Slide-up effect)
+   * @type {Animated.Value}
+   */
   const slideAnim = useRef(new Animated.Value(45)).current;
 
+  /**
+   * Hook de montaje para orquestar la animación fluida de entrada.
+   */
   useEffect(() => {
-    // Fade and slide-up transition for screen contents on load
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 700,
-        useNativeDriver: true,
+        useNativeDriver: true, // Animación vía API nativa
       }),
       Animated.timing(slideAnim, {
         toValue: 0,
@@ -38,13 +72,15 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      {/* Ajusta estilizacion del StatusBar a tema oscuro */}
       <StatusBar backgroundColor={COLORS.secondary} barStyle="light-content" />
       
+      {/* Zona de contenido principal desplazable verticalmente */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* Banner with Players Graphics */}
+        {/* Sección Banner Superior (Hero Banner) con imagen de la selección */}
         <View style={styles.heroContainer}>
           <Image
             source={require('../../assets/jugadores_tri.png')}
@@ -59,18 +95,18 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {/* Circular Avatar badge overlay */}
+        {/* Sección Superpuesta: Escudo circular rompiendo bordes del banner */}
         <View style={styles.badgeFrame}>
           <View style={styles.badgeRing}>
             <Image
-              source={require('../../assets/escudo_ecuador.png')}
+              source={require('../../assets/copa.png')}
               style={styles.badgeImage}
               resizeMode="contain"
             />
           </View>
         </View>
 
-        {/* Details list card area */}
+        {/* Sub-sección: Área de tarjetas y detalles con animación de desplazamiento inicial */}
         <Animated.View
           style={[
             styles.cardsArea,
@@ -85,7 +121,7 @@ export default function HomeScreen() {
             <Text style={styles.subtitleText}>Ficha de Datos e Historia</Text>
           </View>
 
-          {/* Core Info Cards */}
+          {/* Tarjetas de Información Reutilizables */}
           <InfoCard
             icon="earth-outline"
             label="Confederación"
@@ -102,7 +138,7 @@ export default function HomeScreen() {
             value="Estadio Rodrigo Paz Delgado (Quito)"
           />
 
-          {/* Main Action CTA Button */}
+          {/* Botón Call to Action para desplegar información detallada extra */}
           <TouchableOpacity
             style={styles.ctaButton}
             onPress={() => setModalVisible(true)}
@@ -114,19 +150,22 @@ export default function HomeScreen() {
         </Animated.View>
       </ScrollView>
 
-      {/* Underline branding label */}
+      {/* Footer estático flotante o en el borde del renderizado */}
       <View style={styles.brandFooter}>
         <Text style={styles.brandFooterText}>
           Ecuador La Tri • Desarrollado con React Native y Expo Go
         </Text>
       </View>
 
-      {/* Drawer modal with extra squad / schedule details */}
+      {/* Componente Modal que es inyectado encima de las demás vistas */}
       <DetailModal visible={modalVisible} onClose={() => setModalVisible(false)} />
     </View>
   );
 }
 
+/**
+ * Estilos visuales del Home Screen
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,

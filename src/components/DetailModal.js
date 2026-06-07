@@ -1,3 +1,6 @@
+/**
+ * Base imports.
+ */
 import React, { useState } from 'react';
 import {
   Modal,
@@ -12,9 +15,28 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, BORDER_RADIUS, SPACING, SHADOWS } from '../styles/theme';
 
+/**
+ * Componente interactivo Bottom Sheet (Modal Deslizable).
+ * Se superpone de forma flotante mostrando 3 pestañas principales de datos
+ * acerca de la Federación.
+ * 
+ * @param {Object} props - Propiedades del modal.
+ * @param {boolean} props.visible - Dicta el flag para mostrar u ocultar el renderizado nativo.
+ * @param {function} props.onClose - Disparador callback invocado para emitir un evento de cierre.
+ * @returns {JSX.Element} Panel Modal y sus sub-interfaces.
+ */
 export default function DetailModal({ visible, onClose }) {
-  const [activeTab, setActiveTab] = useState('plantilla'); // 'plantilla' | 'partidos' | 'logros'
+  /**
+   * Estado de la Pestaña Activa.
+   * Valores predefinidos: 'plantilla' | 'partidos' | 'logros'
+   * @type {[string, function]}
+   */
+  const [activeTab, setActiveTab] = useState('plantilla');
 
+  /**
+   * Data Mock Estática (Array de jugadores).
+   * @type {Array<Object>}
+   */
   const squad = [
     { name: 'Moisés Caicedo', position: 'Centrocampista', club: 'Chelsea FC (ING)', number: '23' },
     { name: 'Piero Hincapié', position: 'Defensa Central', club: 'Bayer Leverkusen (ALE)', number: '3' },
@@ -24,6 +46,10 @@ export default function DetailModal({ visible, onClose }) {
     { name: 'Pervis Estupiñán', position: 'Lateral Izquierdo', club: 'Brighton (ING)', number: '7' },
   ];
 
+  /**
+   * Data Mock Estática (Array de futuros partidos y calendarios).
+   * @type {Array<Object>}
+   */
   const matches = [
     { opponent: 'Bolivia', location: 'Estadio Monumental (Guayaquil)', date: 'Eliminatorias 2026', type: 'Local' },
     { opponent: 'Colombia', location: 'Estadio Metropolitano (Barranquilla)', date: 'Eliminatorias 2026', type: 'Visitante' },
@@ -31,6 +57,10 @@ export default function DetailModal({ visible, onClose }) {
     { opponent: 'Chile', location: 'Estadio Nacional (Santiago)', date: 'Eliminatorias 2026', type: 'Visitante' },
   ];
 
+  /**
+   * Data Mock Estática (Array de Logros mundialistas).
+   * @type {Array<Object>}
+   */
   const achievements = [
     { title: 'Clasificación Mundial Qatar 2022', desc: 'Fase de grupos. Victoria histórica 2-0 frente al anfitrión Qatar.' },
     { title: 'Clasificación Mundial Brasil 2014', desc: 'Fase de grupos. Conducción técnica por Reinaldo Rueda.' },
@@ -38,6 +68,12 @@ export default function DetailModal({ visible, onClose }) {
     { title: 'Clasificación Mundial Corea-Japón 2002', desc: 'Primera clasificación histórica de la mano de Hernán Darío "Bolillo" Gómez.' },
   ];
 
+  /**
+   * Inyector de sub-vistas (Conditional Rendering).
+   * Genera JSX específico en base a la pestaña seleccionada actualmente.
+   * 
+   * @returns {JSX.Element|null} Contenido interno mapeado para ScrollView.
+   */
   const renderContent = () => {
     switch (activeTab) {
       case 'plantilla':
@@ -114,12 +150,15 @@ export default function DetailModal({ visible, onClose }) {
       visible={visible}
       onRequestClose={onClose}
     >
+      {/* Máscara de oscurecimiento de fondo */}
       <View style={styles.overlay}>
+        
+        {/* Envoltorio simulando un panel inferior (Bottom Sheet) */}
         <View style={styles.sheetContainer}>
-          {/* Header Drag Bar */}
+          {/* Header Drag Bar (Decorativo visual) */}
           <View style={styles.dragIndicator} />
 
-          {/* Modal Header */}
+          {/* Modal Header: Títulos y botón de cierre */}
           <View style={styles.modalHeader}>
             <View>
               <Text style={styles.modalTitle}>Información Ampliada</Text>
@@ -130,7 +169,7 @@ export default function DetailModal({ visible, onClose }) {
             </TouchableOpacity>
           </View>
 
-          {/* Tab Selector */}
+          {/* Tab Selector: Pestañas interactivas */}
           <View style={styles.tabBar}>
             <TouchableOpacity
               onPress={() => setActiveTab('plantilla')}
@@ -175,7 +214,7 @@ export default function DetailModal({ visible, onClose }) {
             </TouchableOpacity>
           </View>
 
-          {/* Scrollable Content */}
+          {/* Scrollable Content: Renderiza lista infinita o contenedores en base al activo */}
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}
